@@ -17,9 +17,9 @@
   <h1>a<image src="./assets/maze.png"></image>in' Dijkstra</span></h1>
 
   <div class = "user-container">
-    <form id="user-container__create-form">
-      <input id="user-container__create-form__input" placeholder="size">
-      <button type="submit" id="user-container__create-form__btn">create maze</button>
+    <form id="create-form" class="user-container__create-form">
+      <input type="number" max="30" min="1" class="user-container__create-form__input" placeholder="size" id="create-size">
+      <button type="submit" id="fwo-btn" class="user-container__create-form__btn">create maze</button>
     </form>
     <button class="user-container__fwo-btn">dijkstra way out!</button>
   </div>
