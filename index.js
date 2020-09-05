@@ -6,41 +6,63 @@ import Maze from './scripts/mazeGenerator.js';
 
 const WALLSIZE = 2;
 let dijkstraArr = [];
+let alreadyOut = false;
 let size;
 let maze;
+let timeoutId;
 
 $(() => {
   $('#create-form').on('submit', (e) => {
     e.preventDefault();
     generateMaze();
+    alreadyOut = false;
+    dijkstraArr = [];
+    if (timeoutId) clearTimeout(timeoutId);
   });
-  $('.fwo-btn').click(() => {
-    if (maze) {
+  $('#fwo-btn').click(() => {
+    if (maze && !alreadyOut) {
       dijkstraArr = findWayOut(maze);
       dijkstraMyWayOut();
+      alreadyOut = true;
     }
   });
 });
 
 function dijkstraMyWayOut () {
-  if (dijkstraArr.length <= 0) return;
+  if (dijkstraArr.length <= 0) {
+    $(':root').css('--color-visited', 'green');
+    return;
+  }
+  $(':root').css('--color-visited', 'yellow');
   const currentTile = dijkstraArr.shift();
-  $(`#${currentTile.name}`).css('background-color', 'yellow');
-  setTimeout(() => dijkstraMyWayOut(), ((1000 / size) > 50 ? (1000 / size) : 50));
+  $(`#${currentTile.name}`).css('background-color', 'var(--color-visited');
+  timeoutId = setTimeout(() => dijkstraMyWayOut(), ((1000 / size) > 50 ? (1000 / size) : 50));
 }
+
+
 
 
 function generateMaze () {
   size = Number.parseInt($('#create-size').val());
-  if (!size || size == NaN || size > 30 || size < 1)
+  if (!size || size == NaN || size > 50 || size < 1)
   {
-    alert('please input a valid number <= 30')
+    alert('please input a valid number <= 50')
   } else {
     maze = new Maze(size).generate();
     const mazeArr = maze.arr;
     $('.maze').html('');
     let tileSize = Math.floor(Number.parseInt($('.maze-container').css('width')) / (2 * size));
-    tileSize = tileSize > 40 ? 40 : tileSize;
+    tileSize = tileSize > 40 ? 40 : (tileSize < 7 ? 7 : tileSize);
+    $(':root').css({
+      '--wall-thickness': 2 * WALLSIZE,
+      '--tile-size': tileSize
+    });
+    const walls = ['upper', 'right', 'lower', 'left'];
+    for (let position of walls) {
+      const wall = $(`<div class="maze-border--${position}"></div>`);
+      $('.maze').append($('<div class="startArrow">➡</div>'));
+      $('.maze').append(wall);
+    }
     for (let row = 0; row < size; row++) {
       let rowDiv = $(`<div></div>`);
       for (let col = 0; col < size; col++) {
@@ -55,17 +77,12 @@ function generateMaze () {
         if (connections.filter(node => node.name == rightIndex).length == 0 && col + 1 < size) {
           colDiv.css({'border-right': WALLSIZE+'px solid black'});
         }
-        //outer walls
-        if (row == 0) colDiv.css({'border-top': 2 * WALLSIZE + 'px solid black'});
-        if (col == 0 && row != 0) colDiv.css({'border-left': 2 * WALLSIZE + 'px solid black'});
-        if (col == size - 1 && row != size - 1) colDiv.css({'border-right': 2*WALLSIZE + 'px solid black'});
-        if (row == size - 1) colDiv.css({'border-bottom': 2 * WALLSIZE + 'px solid black'});
         rowDiv.append(colDiv);
-
       }
       $('.maze').append(rowDiv);
       $('.tile').css('width',tileSize+'px');
       $('.tile').css('height',tileSize+'px');
     }
+    $('.maze').append($('<div class="endArrow">🏁</div>'));
   }
 }

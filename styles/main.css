@@ -56,6 +56,61 @@ h1 img {
   line-height: 0;
 }
 
+.maze {
+  position: relative;
+  opacity: 0.9;
+}
+
+.maze-border{
+  --wall-thickness:
+  position: absolute;
+  top: 0;
+  left:0;
+  background-color: black;
+  width: calc(100% + 4px);
+  height: 4px;
+  transform: translateY(-4px);
+}
+
+.maze-border--upper,
+.maze-border--right,
+.maze-border--lower,
+.maze-border--left {
+  position: absolute;
+  background-color: black;
+}
+
+.maze-border--upper {
+  top: 0;
+  left: 0;
+  width: calc(100% + var(--wall-thickness) * 1px);
+  height: calc(var(--wall-thickness) * 1px);
+  transform: translateY(calc(-1px * var(--wall-thickness)));
+}
+
+.maze-border--right {
+  top: 0;
+  right: 0;
+  width: calc(var(--wall-thickness) * 1px);
+  height: calc(100% - 1px * var(--tile-size));
+  transform: translateX(calc(var(--wall-thickness) * 1px));
+}
+
+.maze-border--lower {
+  bottom: 0;
+  left: calc(-1px * var(--wall-thickness));
+  width: calc(100% + var(--wall-thickness) * 1px);
+  height: calc(var(--wall-thickness) * 1px);
+  transform: translateY(calc(1px * var(--wall-thickness)));
+}
+
+.maze-border--left {
+  top: calc(var(--tile-size) * 1px - 0.5px * var(--wall-thickness));
+  left: 0;
+  width: calc(var(--wall-thickness) * 1px);
+  height: calc(100% - var(--tile-size) * 1px + var(--wall-thickness) * 0.5px);
+  transform: translateX(calc(var(--wall-thickness) * -1px));
+}
 
 
 .tile {
@@ -63,3 +118,37 @@ h1 img {
   display: inline-block;
 }
 
+.user-container__create-form__input,
+.user-container__create-form__btn,
+.user-container__fwo-btn {
+  height: 3rem;
+  border-radius: 4px;
+}
+
+.user-container__create-form__btn,
+.user-container__fwo-btn {
+  cursor: pointer;
+}
+
+.user-container__create-form__input {
+  min-width: 10rem;
+}
+
+.startArrow,
+.endArrow {
+  position: absolute;
+}
+
+.startArrow {
+  top: calc(0.5px * var(--tile-size));
+  left: -4rem;
+  color: white;
+  font-size: 3rem;
+  transform: translateY(-50%);
+}
+
+.endArrow {
+  bottom: calc(0.5px * var(--tile-size));
+  right: -4rem;
+  font-size: 3rem;
+}
