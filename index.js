@@ -1,8 +1,5 @@
-import findWayOut from './scripts/dijkstra.js';
+import { dijkstraWayOut } from './scripts/search.js';
 import Maze from './scripts/mazeGenerator.js';
-// import { PriorityQueue } from './scripts/priority_queue';
-
-// const myQueue = new PriorityQueue();
 
 const WALLSIZE = 2;
 let dijkstraArr = [];
@@ -21,22 +18,22 @@ $(() => {
   });
   $('#fwo-btn').click(() => {
     if (maze && !alreadyOut) {
-      dijkstraArr = findWayOut(maze);
-      dijkstraMyWayOut();
+      dijkstraArr = dijkstraWayOut(maze);
+      displayWayOut(dijkstraArr);
       alreadyOut = true;
     }
   });
 });
 
-function dijkstraMyWayOut () {
-  if (dijkstraArr.length <= 0) {
+function displayWayOut (steps) {
+  if (steps.length <= 0) {
     $(':root').css('--color-visited', 'green');
     return;
   }
   $(':root').css('--color-visited', 'yellow');
-  const currentTile = dijkstraArr.shift();
+  const currentTile = steps.shift();
   $(`#${currentTile.name}`).css('background-color', 'var(--color-visited');
-  timeoutId = setTimeout(() => dijkstraMyWayOut(), ((1000 / size) > 50 ? (1000 / size) : 50));
+  timeoutId = setTimeout(() => displayWayOut(steps), ((1000 / size) > 50 ? (1000 / size) : 50));
 }
 
 
