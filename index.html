@@ -17,15 +17,22 @@
     <h1>a<image src="./assets/maze.png"></image>in' Dijkstra</span></h1>
 
     <div class = "user-container">
-      <form id="create-form" class="user-container__create-form">
-        <input type="number" max="50" min="1"  class="user-container__create-form__input" placeholder="size" id="create-size">
-        <button type="submit" class="user-container__create-form__btn">create maze</button>
-      </form>
-      <button id="fwo-btn" class="user-container__fwo-btn">dijkstra way out!</button>
+      <div class="user-container__left-panel">
+        <form id="create-form" class="user-container__create-form">
+          <input type="number" max="50" min="1"  class="user-container__create-form__input" placeholder="size" id="create-size">
+          <button type="submit" class="user-container__create-form__btn">create maze</button>
+        </form>
+        <div class="slider-container">
+          <input type="range" min = 1 max = 100 class="slider">
+        </div>
+      </div>
+      <div class="user-container__button-container">
+        <button id="dwo-btn" class="user-container__button-container__fwo">dijkstra your way out!</button>
+        <button id="awo-btn" class="user-container__button-container__fwo">A* your way out!</button>
+      </div>
     </div>
 
     <div class = "maze-container">
-
       <div class="maze">
       </div>
     </div>

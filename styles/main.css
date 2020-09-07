@@ -1,7 +1,7 @@
 * {
   /* margin: 0;
   padding: 0; */
-  box-sizing: border-box;
+  box-sizing: inherit;
 }
 html, body {
   background-color: rgb(20,13,7);
@@ -10,6 +10,7 @@ html, body {
 
 html {
   font-size: 62.5%;
+  box-sizing: border-box;
 }
 
 body {
@@ -25,6 +26,7 @@ body {
   width: 50%;
   min-width: 50rem;
   margin: auto;
+  text-align: center;
 }
 
 .user-container {
@@ -130,7 +132,8 @@ h1 img {
 
 .user-container__create-form__input,
 .user-container__create-form__btn,
-.user-container__button-container__fwo {
+.user-container__button-container__fwo,
+.slider-container {
   background-color: #121212;
   color: whitesmoke;
   height: 3rem;

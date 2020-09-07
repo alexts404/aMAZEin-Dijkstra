@@ -8,17 +8,26 @@ let dijkstraArr = [];
 let aStarArr = [];
 let alreadyOut = false;
 let inProgress = false;
+let displayRate;
 let size;
 let maze;
 let timeoutId;
 
 $(() => {
+  $('.slider').on('input', (e => {
+    displayRate = e.target.value;
+  }
+  ));
   $('#create-form').on('submit', (e) => {
     e.preventDefault();
     generateMaze();
     alreadyOut = false;
     dijkstraArr = [];
     if (timeoutId) clearTimeout(timeoutId);
+    // if (!displayRate) {
+      $('.slider').val(Math.floor(102 - 2 * size));
+      displayRate = Math.floor(102 - 2 * size);
+    // }
   });
   $('#dwo-btn').click(() => {
     if (!inProgress) {
@@ -30,6 +39,7 @@ $(() => {
         $('.user-container__button-container__fwo').addClass('inProgress');
         alreadyOut = true;
         dijkstraArr = dijkstraWayOut(maze);
+        console.log('number of DijkstraSteps', dijkstraArr.length)
         displayWayOut(dijkstraArr);
       }
     }
@@ -40,6 +50,7 @@ $(() => {
     }
     if (maze) {
       aStarArr = aStarWayOut(maze);
+      console.log('number of AStar steps', aStarArr.length)
       displayWayOut(aStarArr);
       alreadyOut=true;
     }
@@ -56,7 +67,7 @@ function displayWayOut (steps) {
   $(':root').css('--color-visited', 'yellow');
   const currentTile = steps.shift();
   $(`#${currentTile.id}`).css('background-color', 'var(--color-visited');
-  timeoutId = setTimeout(() => displayWayOut(steps), ((1000 / size) > 50 ? (1000 / size) : 50));
+  timeoutId = setTimeout(() => displayWayOut(steps), 5 * displayRate);
 }
 
 
