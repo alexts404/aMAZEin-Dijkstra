@@ -99,10 +99,12 @@ class PriorityQueue {
   }
 
   dequeue () {
-    const elementToReturn = {  key: this.head.key,
-      value: this.head.value};
-    this.delete(this.head);
-    return elementToReturn;
+    if (this.head){
+      const elementToReturn = {  key: this.head.key,
+        value: this.head.value};
+      this.delete(this.head);
+      return elementToReturn;
+    }
   }
 
 
