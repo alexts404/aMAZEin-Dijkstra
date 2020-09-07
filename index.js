@@ -1,6 +1,6 @@
 'use strict';
 
-import { dijkstraWayOut, aStarWayOut } from './scripts/search.js';
+import { dijkstraWayOut, aStarWayOut, shortestPath } from './scripts/search.js';
 import Maze from './scripts/mazeGenerator.js';
 
 const WALLSIZE = 2;
@@ -33,6 +33,7 @@ $(() => {
     if (!inProgress) {
       if (alreadyOut) {
         $('.tile').css('background-color', 'white');
+        $('.tile').removeClass('purple');
       }
       if (maze) {
         inProgress = true;
@@ -40,18 +41,19 @@ $(() => {
         alreadyOut = true;
         dijkstraArr = dijkstraWayOut(maze);
         console.log('number of DijkstraSteps', dijkstraArr.length)
-        displayWayOut(dijkstraArr);
+        displayWayOut(dijkstraArr.slice());
       }
     }
   });
   $('#awo-btn').click(() => {
     if (alreadyOut) {
       $('.tile').css('background-color', 'white');
+      $('.tile').removeClass('purple');
     }
     if (maze) {
       aStarArr = aStarWayOut(maze);
       console.log('number of AStar steps', aStarArr.length)
-      displayWayOut(aStarArr);
+      displayWayOut(aStarArr.slice());
       alreadyOut=true;
     }
   });
@@ -59,15 +61,25 @@ $(() => {
 
 function displayWayOut (steps) {
   if (steps.length <= 0) {
-    $(':root').css('--color-visited', 'green');
+    // $(':root').css('--color-visited', 'green');
     inProgress = false;
     $('.user-container__button-container__fwo').removeClass('inProgress');
+    displayShortestPath(dijkstraArr.slice());
     return;
   }
   $(':root').css('--color-visited', 'yellow');
   const currentTile = steps.shift();
-  $(`#${currentTile.id}`).css('background-color', 'var(--color-visited');
+  $(`#${currentTile}`).css('background-color', 'var(--color-visited)');
   timeoutId = setTimeout(() => displayWayOut(steps), 1000 / (2 * displayRate));
+}
+
+function displayShortestPath (steps) {
+  const path = shortestPath(steps);
+  console.log(path);
+  while (path.length > 0) {
+    const currentTile = path.shift();
+    $(`#${currentTile}`).addClass('purple');
+  }
 }
 
 

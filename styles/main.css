@@ -198,3 +198,7 @@ h1 img {
 .inProgress {
   color: #444;
 }
+
+.purple {
+  background-color: #902309 !important;
+}
