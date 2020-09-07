@@ -1,9 +1,13 @@
-import { dijkstraWayOut } from './scripts/search.js';
+'use strict';
+
+import { dijkstraWayOut, aStarWayOut } from './scripts/search.js';
 import Maze from './scripts/mazeGenerator.js';
 
 const WALLSIZE = 2;
 let dijkstraArr = [];
+let aStarArr = [];
 let alreadyOut = false;
+let inProgress = false;
 let size;
 let maze;
 let timeoutId;
@@ -16,11 +20,27 @@ $(() => {
     dijkstraArr = [];
     if (timeoutId) clearTimeout(timeoutId);
   });
-  $('#fwo-btn').click(() => {
-    if (maze && !alreadyOut) {
-      dijkstraArr = dijkstraWayOut(maze);
-      displayWayOut(dijkstraArr);
-      alreadyOut = true;
+  $('#dwo-btn').click(() => {
+    if (!inProgress) {
+      if (alreadyOut) {
+        $('.tile').css('background-color', 'white');
+      }
+      if (maze) {
+        inProgress = true;
+        alreadyOut = true;
+        dijkstraArr = dijkstraWayOut(maze);
+        displayWayOut(dijkstraArr);
+      }
+    }
+  });
+  $('#awo-btn').click(() => {
+    if (alreadyOut) {
+      $('.tile').css('background-color', 'white');
+    }
+    if (maze) {
+      aStarArr = aStarWayOut(maze);
+      displayWayOut(aStarArr);
+      alreadyOut=true;
     }
   });
 });
@@ -28,11 +48,12 @@ $(() => {
 function displayWayOut (steps) {
   if (steps.length <= 0) {
     $(':root').css('--color-visited', 'green');
+    inProgress = false;
     return;
   }
   $(':root').css('--color-visited', 'yellow');
   const currentTile = steps.shift();
-  $(`#${currentTile.name}`).css('background-color', 'var(--color-visited');
+  $(`#${currentTile.id}`).css('background-color', 'var(--color-visited');
   timeoutId = setTimeout(() => displayWayOut(steps), ((1000 / size) > 50 ? (1000 / size) : 50));
 }
 
@@ -68,10 +89,10 @@ function generateMaze () {
         let connections = mazeArr[index].connections;
         let rightIndex = (index + 1) % size != 0 ? index + 1 : index;
         let bottomIndex = row + 1 < size ? index + size : index;
-        if (connections.filter(node => node.name == bottomIndex).length == 0 && row + 1 < size) {
+        if (connections.filter(node => node.id == bottomIndex).length == 0 && row + 1 < size) {
           colDiv.css({'border-bottom': WALLSIZE+'px solid black'});
         }
-        if (connections.filter(node => node.name == rightIndex).length == 0 && col + 1 < size) {
+        if (connections.filter(node => node.id == rightIndex).length == 0 && col + 1 < size) {
           colDiv.css({'border-right': WALLSIZE+'px solid black'});
         }
         rowDiv.append(colDiv);
