@@ -2,6 +2,8 @@
   /* margin: 0;
   padding: 0; */
   box-sizing: inherit;
+  font-family: inherit;
+  font-size: inherit;
 }
 html, body {
   background-color: rgb(20,13,7);
@@ -29,20 +31,29 @@ body {
   text-align: center;
 }
 
+
 .user-container {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  font-size: 1.2rem;
 }
 
 h1 {
   text-align: center;
   width: 100%;
   font-family: 'Permanent Marker', cursive;
+  font-size: 3rem;
 }
 
 h1 img {
   vertical-align: middle;
+}
+
+.slider-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .maze-container {

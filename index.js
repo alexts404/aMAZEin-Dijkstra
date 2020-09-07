@@ -25,8 +25,8 @@ $(() => {
     dijkstraArr = [];
     if (timeoutId) clearTimeout(timeoutId);
     // if (!displayRate) {
-      $('.slider').val(Math.floor(102 - 2 * size));
-      displayRate = Math.floor(102 - 2 * size);
+      $('.slider').val(Math.floor(1+ 2 * (size - 1)));
+      displayRate = Math.floor(1 + 2 * (size - 1));
     // }
   });
   $('#dwo-btn').click(() => {
@@ -67,7 +67,7 @@ function displayWayOut (steps) {
   $(':root').css('--color-visited', 'yellow');
   const currentTile = steps.shift();
   $(`#${currentTile.id}`).css('background-color', 'var(--color-visited');
-  timeoutId = setTimeout(() => displayWayOut(steps), 5 * displayRate);
+  timeoutId = setTimeout(() => displayWayOut(steps), 1000 / (2 * displayRate));
 }
 
 
