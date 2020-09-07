@@ -27,6 +27,7 @@ $(() => {
       }
       if (maze) {
         inProgress = true;
+        $('.user-container__button-container__fwo').addClass('inProgress');
         alreadyOut = true;
         dijkstraArr = dijkstraWayOut(maze);
         displayWayOut(dijkstraArr);
@@ -49,6 +50,7 @@ function displayWayOut (steps) {
   if (steps.length <= 0) {
     $(':root').css('--color-visited', 'green');
     inProgress = false;
+    $('.user-container__button-container__fwo').removeClass('inProgress');
     return;
   }
   $(':root').css('--color-visited', 'yellow');

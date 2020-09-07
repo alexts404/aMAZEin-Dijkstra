@@ -118,15 +118,43 @@ h1 img {
   display: inline-block;
 }
 
-.user-container__create-form__input,
-.user-container__create-form__btn,
-.user-container__fwo-btn {
-  height: 3rem;
-  border-radius: 4px;
+.user-container__button-container {
+  display: flex;
+  flex-direction: column;
 }
 
+
+.user-container__button-container__fwo:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.user-container__create-form__input,
 .user-container__create-form__btn,
-.user-container__fwo-btn {
+.user-container__button-container__fwo {
+  background-color: #121212;
+  color: whitesmoke;
+  height: 3rem;
+  border-radius: 4px;
+  border: 1px solid #121212;
+}
+
+.user-container__create-form__input:hover,
+.user-container__create-form__btn:hover,
+.user-container__button-container__fwo:hover,
+.user-container__create-form__input:focus {
+  border: 1px solid #333;
+}
+
+.user-container__create-form__input:focus,
+.user-container__create-form__btn:focus,
+.user-container__button-container__fwo:focus {
+  outline: none;
+}
+
+
+
+.user-container__create-form__btn,
+.user-container__button-container__fwo {
   cursor: pointer;
 }
 
@@ -151,4 +179,8 @@ h1 img {
   bottom: calc(0.5px * var(--tile-size));
   right: -4rem;
   font-size: 3rem;
+}
+
+.inProgress {
+  color: #444;
 }
