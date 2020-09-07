@@ -82,8 +82,6 @@ class Maze {
       node.connections = node.connections.map(connectionId =>
         clonedMaze._arr[connectionId]);
     }
-    clonedMaze._start = clonedMaze._arr[0];
-    clonedMaze._end = clonedMaze._
     return clonedMaze;
   }
 
