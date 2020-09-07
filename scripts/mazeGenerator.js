@@ -1,6 +1,8 @@
+'use strict'
+
 class Node {
-  constructor (name = null, connectedNode = undefined) {
-    this.name = name;
+  constructor (id = null, connectedNode = undefined) {
+    this.id = id;
     if (connectedNode == undefined) {
       this.connections = [];
     } else {
@@ -12,10 +14,7 @@ class Node {
 class Maze {
   constructor (size) {
     this.size = size;
-    this._start = null;
-    this._end = null;
     this._arr = []
-    this.generate();
   }
 
   generate () {
@@ -34,7 +33,6 @@ class Maze {
     while (filled < area) {
       let candidates = [];
       while (candidates.length == 0) {
-        //console.log(candidates);
         if ((rdIdx - size) >= 0 && !this._arr[rdIdx - size]) candidates.push(rdIdx - size);
         if (((rdIdx + 1) % size) != 0 && !this._arr[rdIdx + 1]) candidates.push(rdIdx +1);
         if ((rdIdx % size) != 0 && !this._arr[rdIdx - 1]) candidates.push(rdIdx - 1);
@@ -47,28 +45,46 @@ class Maze {
       // add it to the maze!
       oldNode = this._arr[rdIdx];
       rdIdx = candidates[Math.floor(Math.random() * candidates.length)];
-      //oldNode = newNode;
       newNode = new Node(rdIdx, oldNode);
       oldNode.connections.push(newNode);
       this._arr[rdIdx] = newNode;
       stack.push(rdIdx);
       filled++;
     }
-    this._start = this._arr[0];
-    this._end = this._arr[area - 1];
     return this;
   }
 
   get start () {
-    return this._start;
+    return this._arr[0];
   }
 
   get end () {
-    return this._end;
+    return this._arr[this.size * this.size - 1];
   }
 
   get arr () {
     return this._arr;
+  }
+
+  deepCopy () {
+    const clonedMaze = new Maze(this.size);
+    // initial step: copy maze._arr with ids
+    for (let i = 0; i < this._arr.length; i++) {
+      const node = this._arr[i];
+      const clonedNode = new Node (node.id);
+      for (let connection of node.connections) {
+        clonedNode.connections.push(connection.id);
+      }
+      clonedMaze._arr.push(clonedNode);
+    }
+    // completion: map ids to nodes
+    for (let node of clonedMaze._arr) {
+      node.connections = node.connections.map(connectionId =>
+        clonedMaze._arr[connectionId]);
+    }
+    clonedMaze._start = clonedMaze._arr[0];
+    clonedMaze._end = clonedMaze._
+    return clonedMaze;
   }
 
 }
