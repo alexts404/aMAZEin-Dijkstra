@@ -83,14 +83,11 @@ function dijkstraSearch (node, maze) {
 }
 
 
-export function shortestPath (){
+export function shortestPath () {
   // expects a list of visitedNodes as input. Returns the shortest path from start to end
   const path = [];
   let node = nodesVisited[nodesVisited.length - 1];
-  console.log(node);
   while (node) {
-    console.log(node);
-
     path.unshift(node);
     node = node.predecessor;
   }

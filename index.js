@@ -6,6 +6,7 @@ import Maze from './scripts/mazeGenerator.js';
 const WALLSIZE = 2;
 let dijkstraArr = [];
 let aStarArr = [];
+let path = [];
 let alreadyOut = false;
 let inProgress = false;
 let displayRate;
@@ -40,7 +41,6 @@ $(() => {
         $('.user-container__button-container__fwo').addClass('inProgress');
         alreadyOut = true;
         dijkstraArr = dijkstraWayOut(maze);
-        console.log('number of DijkstraSteps', dijkstraArr.length)
         displayWayOut(dijkstraArr.slice());
       }
     }
@@ -51,10 +51,11 @@ $(() => {
       $('.tile').removeClass('purple');
     }
     if (maze) {
-      aStarArr = aStarWayOut(maze);
-      console.log('number of AStar steps', aStarArr.length)
-      displayWayOut(aStarArr.slice());
+      inProgress = true;
+      $('.user-container__button-container__fwo').addClass('inProgress');
       alreadyOut=true;
+      aStarArr = aStarWayOut(maze);
+      displayWayOut(aStarArr.slice());
     }
   });
 });
@@ -64,7 +65,7 @@ function displayWayOut (steps) {
     // $(':root').css('--color-visited', 'green');
     inProgress = false;
     $('.user-container__button-container__fwo').removeClass('inProgress');
-    displayShortestPath(dijkstraArr.slice());
+    displayShortestPath();
     return;
   }
   $(':root').css('--color-visited', 'yellow');
@@ -73,11 +74,11 @@ function displayWayOut (steps) {
   timeoutId = setTimeout(() => displayWayOut(steps), 1000 / (2 * displayRate));
 }
 
-function displayShortestPath (steps) {
-  const path = shortestPath(steps);
-  console.log(path);
-  while (path.length > 0) {
-    const currentTile = path.shift();
+function displayShortestPath () {
+  path = shortestPath();
+  const tmpPath = path.slice();
+  while (tmpPath.length > 0) {
+    const currentTile = tmpPath.shift();
     $(`#${currentTile}`).addClass('purple');
   }
 }
