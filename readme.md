@@ -19,10 +19,10 @@ Build a maze and let Dijkstra or A\* find your way out.
 
 - vanilla javascript, including
   - priority queue, implemented from scratch as linked binary heap
-  - Dijkstra algorithm, implemented from scratch
-  - A\* algorithm, implemented from scratch
+  - Dijkstra path finding algorithm, implemented from scratch
+  - A\* pathfinding algorithm, implemented from scratch
 - [blood, sweat & tears](https://bloodsweatandtears.com/)
 
 ## Developer
 
-- Alex Steinberg: [github](https://github.com/atsteinberg) – [linkedin](https://www.linkedin.com/in/alexander-steinberg-7b7299194) – [web](atsteinberg.github.io)
+- Alex Steinberg: [github](https://github.com/atsteinberg) – [linkedin](https://www.linkedin.com/in/alexander-steinberg-7b7299194) – [web](https://atsteinberg.github.io)
